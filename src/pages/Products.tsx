@@ -5,39 +5,52 @@ import ListOfProducts from '../components/ListOfProducts';
 import ReactPaginate from 'react-paginate';
 import style from '../styles/products.module.css'
 import ProductsLoader from '../components/ProductsLoader';
+import { useFilter } from '../store/filter';
+import Filters from '../components/Filters';
 
 const ITEMS_PER_PAGE = 9;
+
 
 const Products: React.FC = () => {
     const [products, setProducts] = useState<Product[]>([]);
     const [productsFiltered, setProductsFiltered] = useState<Product[]>([]);
+    const [productsPerPage, setProductsPerPage] = useState<Product[]>([]);
     const [loading, setLoading] = useState<boolean>(true);
-    // const [search, setSearch] = useState<string>('');
     const [page, setPage] = useState<number>(0);
+    const filter = useFilter(state=> state.filter)
 
     useEffect(() => {
         const getProducts = async () => {
             const newProducts = await fetchProducts();
             setProducts(newProducts);
-            setProductsFiltered(newProducts.slice(ITEMS_PER_PAGE * (page), ITEMS_PER_PAGE * (page + 1)));
+            setProductsFiltered(newProducts);
+            setProductsPerPage(newProducts.slice(ITEMS_PER_PAGE * (page), ITEMS_PER_PAGE * (page + 1)));
             setLoading(false);
         };
         getProducts();
-        
+
     }, []);
 
     useEffect(() => {
-        setProductsFiltered(products.slice(ITEMS_PER_PAGE * (page), ITEMS_PER_PAGE * (page + 1)));
-    }, [products, page]);
+        setPage(0);
+        let newProductsFilter = products.filter(product => {
+            return (filter.name === "" || product.title.toLowerCase().startsWith(filter.name.toLowerCase())) 
+            && (filter.category === "" || product.category === filter.category)
+        })
+        setProductsFiltered(newProductsFilter);
+    }, [filter]);
+
+    useEffect(() => {
+        setProductsPerPage(productsFiltered.slice(ITEMS_PER_PAGE * (page), ITEMS_PER_PAGE * (page + 1)));
+    }, [page, productsFiltered])
 
 
     return (
         <section className={style.section}>
-            <h1>Productos</h1>
-            {loading ? <ProductsLoader></ProductsLoader> : <ListOfProducts products={productsFiltered}></ListOfProducts>}
-            {/* <ProductsLoader></ProductsLoader> */}
+            <Filters></Filters>
+            {loading ? <ProductsLoader></ProductsLoader> : <ListOfProducts products={productsPerPage}></ListOfProducts>}
             <ReactPaginate
-                pageCount={Math.ceil(products.length / ITEMS_PER_PAGE)}
+                pageCount={Math.ceil(productsFiltered.length / ITEMS_PER_PAGE)}
                 onPageChange={pageActual => setPage(pageActual.selected)}
                 forcePage={page}
                 previousLabel={`<`}

@@ -1,0 +1,33 @@
+.form{
+    display: flex;
+    gap: 20px;
+    width: 100%;
+    max-width: 1200px;
+    padding: 0 20px;
+    align-items: center;
+    justify-content: center;
+}
+
+.input{
+    width: 200px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #000;
+}
+
+.select{
+    width: 200px;
+    padding: 5px;
+    border-radius: 5px;
+    border: 1px solid #000;
+}
+
+@media screen and (width < 360px) {
+    .input{
+        width: 130px;
+    }
+
+    .select{
+        width: 130px;
+    }
+}

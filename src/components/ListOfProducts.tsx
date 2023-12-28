@@ -8,8 +8,6 @@ interface Props{
 }
 
 const ListOfProducts: React.FC<Props> = ({products}) => {
-  
-
 
   return (
     <>

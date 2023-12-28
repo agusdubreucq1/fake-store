@@ -36,3 +36,20 @@ picture img{
     font-size: 20px;
     font-weight: 400;
 }
+
+@media screen and (width < 400px) {
+    .card{
+        height: 250px;
+    }
+
+    .picture{
+        height: 100px;
+    }
+
+    .price{
+        font-size: 16px;
+    }
+
+
+    
+}

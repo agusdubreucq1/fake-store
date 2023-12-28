@@ -6,7 +6,6 @@ import Carrito from './components/Carrito'
 import Products from './pages/Products'
 
 
-import { lazy } from 'react'
 import Layout from './components/Layout'
 
 // const Carrito = lazy(() => import('./components/Carrito'))
