@@ -1,4 +1,4 @@
-import React, { useEffect, useId } from 'react';
+import React from 'react';
 import styles from '../styles/modal.module.css'
 
 interface Props {
@@ -9,15 +9,6 @@ interface Props {
 }
 
 const Modal: React.FC<Props> = ({ texto, funcion, show, cerrarModal }) => {
-    // const id = useId();
-
-    // useEffect(() => {
-    //     console.log('show', show)
-    //     const modal = document.querySelector('.modal') as any;
-    //     if (show) modal?.showModal();
-    //     else modal?.close();
-    // }, [show])
-
 
 
     return (
